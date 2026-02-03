@@ -1,6 +1,5 @@
 def call(Map params = [:]) {
     // Orchestrator: run small steps in sequence so template is modular
-    checkoutStep()
     compileStep()
     unitTestStep()
     packageStep()
@@ -8,14 +7,6 @@ def call(Map params = [:]) {
     publishStep()
     notifyStep()
 }
-
-def checkoutStep() {
-    stage('Checkout') {
-        echo 'Checking out SCM'
-        checkout scm
-    }
-}
-
 def compileStep() {
     stage('Compile') {
         echo 'Compiling with Maven'
