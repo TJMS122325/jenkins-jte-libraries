@@ -1,9 +1,9 @@
 def call(Map params = [:]) {
     // Orchestrator: run small steps in sequence so template is modular
     compileStep()
-    unitTestStep()
     packageStep()
     sonarStep()
+    unitTestStep()
     publishStep()
     notifyStep()
 }
@@ -19,9 +19,6 @@ def unitTestStep() {
         echo 'Running unit tests'
         sh 'mvn -B test'
         junit '**/target/surefire-reports/*.xml'
-        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh 'exit 1' // Command that fails
-    }
     }
 }
 
@@ -41,6 +38,14 @@ def sonarStep() {
         } else {
             echo 'Sonar not configured; skipping'
         }
+    }
+}
+
+def unitTestStep() {
+    stage('Unit Tests') {
+        echo 'Running unit tests'
+        sh 'mvn -B test'
+        junit '**/target/surefire-reports/*.xml'
     }
 }
 
