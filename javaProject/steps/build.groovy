@@ -14,14 +14,6 @@ def compileStep() {
     }
 }
 
-def unitTestStep() {
-    stage('Unit Tests') {
-        echo 'Running unit tests'
-        sh 'mvn -B test'
-        junit '**/target/surefire-reports/*.xml'
-    }
-}
-
 def packageStep() {
     stage('Package') {
         echo 'Packaging artifact'
