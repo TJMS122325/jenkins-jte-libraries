@@ -19,6 +19,9 @@ def unitTestStep() {
         echo 'Running unit tests'
         sh 'mvn -B test'
         junit '**/target/surefire-reports/*.xml'
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh 'exit 1' // Command that fails
+    }
     }
 }
 
